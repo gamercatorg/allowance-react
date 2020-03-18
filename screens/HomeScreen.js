@@ -31,13 +31,9 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.main}>
-          <Text>
-            Welcome to the Allowance App. Your current balance is:
-          </Text>
+          <Text>Welcome to the Allowance App. Your current balance is:</Text>
 
-          <Text style={styles.currentBalance}>
-            $6
-          </Text>
+          <Text style={styles.currentBalance}>$6</Text>
         </View>
       </ScrollView>
 
@@ -86,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: "center"
   },
   welcomeImage: {
     width: 100,
