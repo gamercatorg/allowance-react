@@ -30,9 +30,7 @@ export default function HomeScreen() {
             Welcome to the Gamercat Allowance App. Your current balance is:
           </Text>
 
-          <Text style={styles.currentBalance}>
-            $6
-          </Text>
+          <Text style={styles.currentBalance}>$6</Text>
         </View>
       </ScrollView>
     </View>
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: "center"
   },
   main: {
     alignItems: "center",
