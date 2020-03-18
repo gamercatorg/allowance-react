@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 50
   },
   welcome: {
-    textAlign: 'center',
+    textAlign: "center"
   },
   currentBalance: {
     fontSize: 90
