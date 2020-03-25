@@ -19,7 +19,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: "Get Started",
+          title: "View",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-code-working" />
           )
@@ -29,7 +29,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Links"
         component={LinksScreen}
         options={{
-          title: "Resources",
+          title: "Add/Remove",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
           )
