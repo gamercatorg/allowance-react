@@ -29,7 +29,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Edit"
         component={EditScreen}
         options={{
-          title: "Add/Remove",
+          title: "Edit",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="edit" />
           )
