@@ -47,6 +47,6 @@ function getHeaderTitle(route) {
     case "Home":
       return "Gamercat Allowance App";
     case "Edit":
-      return "Edit the amount of money";
+      return "Edit the Amount of Money";
   }
 }
