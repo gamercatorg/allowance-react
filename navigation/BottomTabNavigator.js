@@ -19,7 +19,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: "View",
+          title: "View Money",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="attach-money" />
           )
