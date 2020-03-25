@@ -38,12 +38,14 @@ export default function HomeScreen() {
           </Text>
 
           <Text style={styles.currentBalance}>$6</Text>
-        </View>
 
-        <Text style={styles.welcome}>Your current charity balance is:</Text>
+          <Text style={styles.welcome}>Your current charity balance is:</Text>
 
         <Text style={styles.currentBalance}>$6</Text>
-      </ScrollView>
+
+        </View>
+
+              </ScrollView>
     </View>
   );
 }
