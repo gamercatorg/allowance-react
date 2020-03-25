@@ -26,7 +26,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
+        name="Edit"
         component={EditScreen}
         options={{
           title: "Add/Remove",
