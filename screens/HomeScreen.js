@@ -27,11 +27,23 @@ export default function HomeScreen() {
 
         <View style={styles.main}>
           <Text style={styles.welcome}>
-            Welcome to the Gamercat Allowance App. Your current balance is:
+            Welcome to the Gamercat Allowance App. Your current savings balance is:
+          </Text>
+
+          <Text style={styles.currentBalance}>$6</Text>
+
+          <Text style={styles.welcome}>
+            Your current instant spending balance is:
           </Text>
 
           <Text style={styles.currentBalance}>$6</Text>
         </View>
+
+        <Text style={styles.welcome}>
+            Your current charity balance is:
+          </Text>
+
+          <Text style={styles.currentBalance}>$6</Text>
       </ScrollView>
     </View>
   );
