@@ -46,7 +46,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case "Home":
       return "Gamercat Allowance App";
-    case "Links":
-      return "Links to learn more";
+    case "Edit":
+      return "Edit the amount of money";
   }
 }
