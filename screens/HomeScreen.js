@@ -8,8 +8,12 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import allowance from '../lib/allowance'
 
-import { MonoText } from "../components/StyledText";
+var currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+})
 
 export default function HomeScreen() {
   return (
@@ -31,17 +35,17 @@ export default function HomeScreen() {
             is:
           </Text>
 
-          <Text style={styles.currentBalance}>$6</Text>
+          <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getSavingsBalance()/100)}</Text>
 
           <Text style={styles.welcome}>
             Your current instant spending balance is:
           </Text>
 
-          <Text style={styles.currentBalance}>$6</Text>
+          <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getInstantSpendingBalance()/100)}</Text>
 
           <Text style={styles.welcome}>Your current charity balance is:</Text>
 
-          <Text style={styles.currentBalance}>$6</Text>
+          <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getCharityBalance()/100)}</Text>
         </View>
       </ScrollView>
     </View>
