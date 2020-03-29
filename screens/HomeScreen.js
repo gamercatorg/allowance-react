@@ -68,14 +68,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     marginBottom: 20,
-    textAlign: "center"
   },
   main: {
     alignItems: "center",
     marginHorizontal: 50
-  },
-  welcome: {
-    textAlign: "center"
   },
   currentBalance: {
     fontSize: 90
