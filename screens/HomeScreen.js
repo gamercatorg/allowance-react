@@ -30,20 +30,20 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.main}>
-          <Text style={styles.welcome}>
+          <Text style={styles.text}>
             Welcome to the Gamercat Allowance App. Your current savings balance
             is:
           </Text>
 
           <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getSavingsBalance()/100)}</Text>
 
-          <Text style={styles.welcome}>
+          <Text style={styles.text}>
             Your current instant spending balance is:
           </Text>
 
           <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getInstantSpendingBalance()/100)}</Text>
 
-          <Text style={styles.welcome}>Your current charity balance is:</Text>
+          <Text style={styles.text}>Your current charity balance is:</Text>
 
           <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getCharityBalance()/100)}</Text>
         </View>
@@ -59,7 +59,14 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#000000"
+  },
+  text: {
+    color: "#ffffff"
+  },
+  currentBalance: {
+    color: "#ffffff",
+    fontSize: 90
   },
   contentContainer: {
     paddingTop: 30
@@ -67,14 +74,11 @@ const styles = StyleSheet.create({
   robotContainer: {
     alignItems: "center",
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 20
   },
   main: {
     alignItems: "center",
     marginHorizontal: 50
-  },
-  currentBalance: {
-    fontSize: 90
   },
   homeScreenFilename: {
     marginVertical: 7
