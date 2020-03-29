@@ -5,11 +5,22 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Constants from 'expo-constants';
 
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
+
+import * as Sentry from 'sentry-expo';
+
+Sentry.init({
+  dsn: 'https://150b14d6543c4979ab0db4b141ae0b51@sentry.io/2443239',
+  enableInExpoDevelopment: true,
+  debug: true
+});
+
+Sentry.setRelease(Constants.manifest.revisionId);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -22,6 +33,7 @@ export default function App(props) {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHide();
+        Sentry.nativeCrash(); // Test crash
 
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
@@ -31,9 +43,10 @@ export default function App(props) {
           ...Ionicons.font,
           "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
         });
-      } catch (e) {
-        // We might want to provide this error information to an error reporting service
-        console.warn(e);
+      // } catch (e) {
+      //   // We might want to provide this error information to an error reporting service
+      //   console.warn(e);
+      // From Leo - Hooked up Sentry, ready to catch errors
       } finally {
         setLoadingComplete(true);
         SplashScreen.hide();

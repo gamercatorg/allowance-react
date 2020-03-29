@@ -21,5 +21,18 @@
     "ios": {
       "supportsTablet": true
     }
+
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "meow-cat",
+            "project": "allowance-react",
+            "authToken": "15c38a8bdde0423a97fce4c58fb9f14cb699d52c177f45b8853c38766412e276",
+          }
+        }
+      ]
+    }
   }
 }
