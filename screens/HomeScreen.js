@@ -10,7 +10,7 @@ import useAllowance from '../lib/allowanceHook'
 
 export default function HomeScreen() {
 
-  const { balances, isLoaded, isLoading, error } = useAllowance()
+  const { balances, isLoaded, isLoading, error, weeksSinceStart } = useAllowance()
 
   return (
     <View style={styles.container}>
@@ -59,6 +59,8 @@ export default function HomeScreen() {
               <Text style={styles.text}>Your current charity balance is:</Text>
 
               <Text style={styles.currentBalance}>{balances.charity}</Text>
+
+              <Text style={styles.text}>It has been {weeksSinceStart} weeks</Text>
             </>
           )}
         </View>
