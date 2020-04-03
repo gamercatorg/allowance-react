@@ -76,13 +76,13 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000"
+    backgroundColor: "#fff"
   },
   text: {
-    color: "#ffffff"
+    color: "#000"
   },
   currentBalance: {
-    color: "#ffffff",
+    color: "#000",
     fontSize: 90
   },
   contentContainer: {
