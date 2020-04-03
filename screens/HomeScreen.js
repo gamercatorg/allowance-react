@@ -1,21 +1,17 @@
 import * as React from "react";
 import {
   Image,
-  Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import allowance from '../lib/allowance'
-
-var currencyFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-})
+import useAllowance from '../lib/allowanceHook'
 
 export default function HomeScreen() {
+
+  const { balances, isLoaded, isLoading, error } = useAllowance()
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -31,21 +27,40 @@ export default function HomeScreen() {
 
         <View style={styles.main}>
           <Text style={styles.text}>
-            Welcome to the Gamercat Allowance App. Your current savings balance
-            is:
+            Welcome to the Gamercat Allowance App.
           </Text>
 
-          <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getSavingsBalance()/100)}</Text>
+          {error && (
+            <Text style={styles.text}>
+              There was an error
+            </Text>
+          )}
 
-          <Text style={styles.text}>
-            Your current instant spending balance is:
-          </Text>
+          {isLoading && (
+            <Text style={styles.text}>
+              Loading...
+            </Text>
+          )}
 
-          <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getInstantSpendingBalance()/100)}</Text>
+          {isLoaded && (
+            <>
+              <Text style={styles.text}>
+                Your current savings balance is:
+              </Text>
 
-          <Text style={styles.text}>Your current charity balance is:</Text>
+              <Text style={styles.currentBalance}>{balances.savings}</Text>
 
-          <Text style={styles.currentBalance}>{currencyFormatter.format(allowance.getCharityBalance()/100)}</Text>
+              <Text style={styles.text}>
+                Your current instant spending balance is:
+              </Text>
+
+              <Text style={styles.currentBalance}>{balances.instantSpending}</Text>
+
+              <Text style={styles.text}>Your current charity balance is:</Text>
+
+              <Text style={styles.currentBalance}>{balances.charity}</Text>
+            </>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -71,27 +86,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30
   },
-  robotContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20
-  },
   main: {
     alignItems: "center",
     marginHorizontal: 50
   },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  navigationFilename: {
-    marginTop: 5
-  }
 });
