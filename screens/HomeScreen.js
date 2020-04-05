@@ -6,11 +6,13 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import useAllowance from '../lib/allowanceHook'
+import { useSelector } from 'react-redux';
+
+const centsToPrettyString = (cents) => (cents / parseFloat(100)).toLocaleString("en-US", {style:"currency", currency:"USD"})
 
 export default function HomeScreen() {
 
-  const { balances, isLoaded, isLoading, error, weeksSinceStart } = useAllowance()
+  const accounts = useSelector(_ => _.accounts);
 
   return (
     <View style={styles.container}>
@@ -30,39 +32,12 @@ export default function HomeScreen() {
             Welcome to the Gamercat Allowance App.
           </Text>
 
-          {error && (
-            <Text style={styles.text}>
-              There was an error
-            </Text>
-          )}
-
-          {isLoading && (
-            <Text style={styles.text}>
-              Loading...
-            </Text>
-          )}
-
-          {isLoaded && (
-            <>
-              <Text style={styles.text}>
-                Your current savings balance is:
-              </Text>
-
-              <Text style={styles.currentBalance}>{balances.savings}</Text>
-
-              <Text style={styles.text}>
-                Your current instant spending balance is:
-              </Text>
-
-              <Text style={styles.currentBalance}>{balances.instantSpending}</Text>
-
-              <Text style={styles.text}>Your current charity balance is:</Text>
-
-              <Text style={styles.currentBalance}>{balances.charity}</Text>
-
-              <Text style={styles.text}>It has been {weeksSinceStart} weeks</Text>
-            </>
-          )}
+          {accounts.map(({ name, balanceCents }) => (
+            <React.Fragment key={name}>
+              <Text style={styles.text}>Your current {name} balance is:</Text>
+              <Text style={styles.currentBalance}>{centsToPrettyString(balanceCents)}</Text>
+            </React.Fragment>
+          ))}
         </View>
       </ScrollView>
     </View>
