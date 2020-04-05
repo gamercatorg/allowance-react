@@ -1,69 +1,67 @@
 import * as React from "react";
-import { StyleSheet, Text, View, TextInput, Picker } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import allowance from '../lib/allowance'
-import useAllowance from '../lib/allowanceHook'
+import { StyleSheet, Text, View, TextInput, Picker, Button } from "react-native";
+import { useSelector, useDispatch } from 'react-redux';
+import { setBalance } from '../actions'
+
+const centsToPrettyString = (cents) => (cents / parseFloat(100)).toLocaleString("en-US", { style: "currency", currency: "USD" })
+const uglyStringToCents = (str) => Math.round(100 * parseFloat(str.replace(/[$,]/g, '')))
 
 export default function EditScreen() {
+  const accounts = useSelector(_ => _.accounts);
+  const dispatch = useDispatch();
 
-  const { balances, isLoaded, isLoading, error, weeksSinceStart } = useAllowance();
-  const [currentAccount, setCurrentAccount] = React.useState('savings');
+  const [selectedAccountId, setSelectedAccountId] = React.useState(null);
   const [textboxValue, onChangeTextboxValue] = React.useState('');
-  
-  React.useEffect(() => {
-    onChangeTextboxValue(balances[currentAccount])
-  }, [balances, currentAccount])
 
-  const handleTextboxChange = (text) => {
-    onChangeTextboxValue(text)
+  const selectAccount = (id) => {
+    setSelectedAccountId(id)
+    const { balanceCents } = accounts.find(a => a.id == id)
+    const pretty = centsToPrettyString(balanceCents)
+    onChangeTextboxValue(pretty)
   }
+
+  const selectedAccount = accounts.find(a => a.id == selectedAccountId) || {}
+
+  const handleSave = () => {
+    const newBalance = uglyStringToCents(textboxValue);
+    const payload = setBalance({ id: selectedAccountId, balanceCents: newBalance });
+    dispatch(payload)
+    const pretty = centsToPrettyString(newBalance);
+    onChangeTextboxValue(pretty)
+  }
+
+  React.useEffect(() => {
+    if (textboxValue == '' && accounts.length > 0) selectAccount(accounts[0].id)
+  }, [textboxValue, accounts])
 
   return (
     <View
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <Text style={styles.text}>Leo is the best!</Text>
-      <Text style={styles.text}>&nbsp;</Text>
-      <Text style={styles.text}>&nbsp;</Text>
-      <Text style={styles.text}>&nbsp;</Text>
-      <Text style={styles.text}>&nbsp;</Text>
-      <Text style={styles.text}>&nbsp;</Text>
-      <Text style={styles.text}>&nbsp;</Text>
-      <View style={{width: '600px' }}>
+      <View style={styles.root}>
+        <View style={styles.balanceEditor}>
+          <TextInput style={styles.input} value={textboxValue} onChangeText={text => onChangeTextboxValue(text)} />
+          {accounts && selectedAccount && (
+            <Picker
+              selectedValue={selectedAccount.id}
+              style={styles.picker}
+              onValueChange={(id) => selectAccount(id)}
+            >
+              {(accounts).map(a => (<Picker.Item key={a.id} label={a.name} value={a.id} />))}
+            </Picker>
+          )}
+        </View>
 
-        <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }} value={textboxValue} onChangeText={text => handleTextboxChange(text)} />
-        <Text style={styles.text}>&nbsp;</Text>
-        <Text style={styles.text}>&nbsp;</Text>
-        <Picker
-          selectedValue={currentAccount}
-          style={{ height: 50, width: 150 }}
-          onValueChange={(itemValue, itemIndex) => setCurrentAccount(itemValue)}
-        >
-        <Picker.Item label="Savings" value="savings" />
-        <Picker.Item label="Instant Spending" value="instantSpending" />
-        <Picker.Item label="Charity" value="charity" />
-      </Picker>
-        <Text style={styles.text}>&nbsp;</Text>
-        <Text style={styles.text}>&nbsp;</Text>
-
-        <TouchableOpacity
-          onPress={() => {
-            const val = Math.round(100 * parseFloat(textboxValue.replace(/[$,]/g, '')))
-            allowance.setBalance(currentAccount, val)
-          }}
-          style={{ backgroundColor: 'blue', width: '200px' }}>
-          <Text style={{ fontSize: 20, color: '#fff' }}>Save</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonWrap}>
+          <Button
+            title="Save"
+            onPress={() => handleSave()}
+          />
+        </View>
 
         <Text style={styles.text}>&nbsp;</Text>
         <Text style={styles.text}>&nbsp;</Text>
-
-        <TouchableOpacity
-          onPress={() => allowance.flush()}
-          style={{ backgroundColor: 'red', width: '200px' }}>
-          <Text style={{ fontSize: 20, color: '#fff' }}>Flush data</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -79,5 +77,32 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black'
+  },
+  root: {
+    width: 600,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  balanceEditor: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: '10px'
+  },
+  input: {
+    height: '40px',
+    flexGrow: 1,
+    marginRight: '20px',
+    backgroundColor: '#e3e8ee',
+    padding: '5px'
+  },
+  picker: {
+    minWidth: '200px'
+  },
+  buttonWrap: {
+    backgroundColor: 'red',
+    minWidth: '100px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '25px'
   }
 });

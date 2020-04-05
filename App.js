@@ -5,10 +5,9 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Constants from 'expo-constants';
 import { Provider, connect } from 'react-redux';
-
-import store from './store'
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from './store'
 
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
@@ -46,10 +45,10 @@ export default function App(props) {
           ...Ionicons.font,
           "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
         });
-      // } catch (e) {
-      //   // We might want to provide this error information to an error reporting service
-      //   console.warn(e);
-      // From Leo - Hooked up Sentry, ready to catch errors
+        // } catch (e) {
+        //   // We might want to provide this error information to an error reporting service
+        //   console.warn(e);
+        // From Leo - Hooked up Sentry, ready to catch errors
       } finally {
         setLoadingComplete(true);
         SplashScreen.hide();
@@ -59,25 +58,25 @@ export default function App(props) {
     loadResourcesAndDataAsync();
   }, []);
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return null;
-  } else {
-    return (
-      <Provider store={store}>
-      <View style={styles.container}>
-        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-        <NavigationContainer
-          ref={containerRef}
-          initialState={initialNavigationState}
-        >
-          <Stack.Navigator>
-            <Stack.Screen name="Gamercat Allowance" component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
-      </Provider>
-    );
-  }
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        { (isLoadingComplete || props.skipLoadingScreen) && (
+          <View style={styles.container}>
+          {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+          <NavigationContainer
+            ref={containerRef}
+            initialState={initialNavigationState}
+          >
+            <Stack.Navigator>
+              <Stack.Screen name="Gamercat Allowance" component={BottomTabNavigator} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+        ) }
+      </PersistGate>
+    </Provider>
+  )
 }
 
 const styles = StyleSheet.create({
