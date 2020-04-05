@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Text, View, TextInput, Picker, Button } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
-import { setBalance } from '../actions'
+import { setBalance, adjustBalance } from '../actions'
 
 const centsToPrettyString = (cents) => (cents / parseFloat(100)).toLocaleString("en-US", { style: "currency", currency: "USD" })
 const uglyStringToCents = (str) => Math.round(100 * parseFloat(str.replace(/[$,]/g, '')))
@@ -11,28 +11,22 @@ export default function EditScreen() {
   const dispatch = useDispatch();
 
   const [selectedAccountId, setSelectedAccountId] = React.useState(null);
-  const [textboxValue, onChangeTextboxValue] = React.useState('');
-
-  const selectAccount = (id) => {
-    setSelectedAccountId(id)
-    const { balanceCents } = accounts.find(a => a.id == id)
-    const pretty = centsToPrettyString(balanceCents)
-    onChangeTextboxValue(pretty)
-  }
+  const [textboxValue, onChangeTextboxValue] = React.useState('$');
 
   const selectedAccount = accounts.find(a => a.id == selectedAccountId) || {}
+  React.useEffect(() => {
+    if (selectedAccountId == null && accounts.length > 0) setSelectedAccountId(accounts[0].id)
+  }, [selectedAccountId, accounts])
+
+
+  const currentBalance = selectedAccount && selectedAccount.balanceCents ? selectedAccount.balanceCents : 0
+  const newBalance = currentBalance - Math.max(uglyStringToCents(textboxValue) || 0, 0)
 
   const handleSave = () => {
-    const newBalance = uglyStringToCents(textboxValue);
     const payload = setBalance({ id: selectedAccountId, balanceCents: newBalance });
     dispatch(payload)
-    const pretty = centsToPrettyString(newBalance);
-    onChangeTextboxValue(pretty)
+    onChangeTextboxValue('$')
   }
-
-  React.useEffect(() => {
-    if (textboxValue == '' && accounts.length > 0) selectAccount(accounts[0].id)
-  }, [textboxValue, accounts])
 
   return (
     <View
@@ -40,18 +34,24 @@ export default function EditScreen() {
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.root}>
+
+      <Text style={{ ...styles.text, fontSize: 32, textAlign: 'center' }}>Withdraw Money</Text>
+
         <View style={styles.balanceEditor}>
           <TextInput style={styles.input} value={textboxValue} onChangeText={text => onChangeTextboxValue(text)} />
           {accounts && selectedAccount && (
             <Picker
               selectedValue={selectedAccount.id}
-              style={styles.picker}
-              onValueChange={(id) => selectAccount(id)}
+              style={styles.accountPicker}
+              onValueChange={(id) => setSelectedAccountId(id)}
             >
               {(accounts).map(a => (<Picker.Item key={a.id} label={a.name} value={a.id} />))}
             </Picker>
           )}
         </View>
+
+        <Text style={{ ...styles.text, fontSize: 24, textAlign: 'center' }}>Current balance is: {centsToPrettyString(currentBalance)}</Text>
+        <Text style={{ ...styles.text, fontSize: 24, textAlign: 'center' }}>New balance will be: {centsToPrettyString(newBalance)}</Text>
 
         <View style={styles.buttonWrap}>
           <Button
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e3e8ee',
     padding: '5px'
   },
-  picker: {
+  accountPicker: {
     minWidth: '200px'
   },
   buttonWrap: {
