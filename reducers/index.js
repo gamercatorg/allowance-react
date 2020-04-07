@@ -1,6 +1,9 @@
-import { ADJUST_BALANCE, SET_BALANCE } from '../constants'
+import { ADJUST_BALANCE, SET_BALANCE, SET_ALLOWANCE, DISPERSE_ALLOWANCE } from '../constants'
 
 const initialState = {
+    pinCode: '0000',
+    allowanceCents: 300,
+    allowanceLastDistributed: new Date('2020/03/01'),
     accounts: [
         { id: 0, name: 'Savings', balanceCents: 0 },
         { id: 1, name: 'Instant Spending', balanceCents: 0 },
@@ -22,9 +25,19 @@ function rootReducer(state = initialState, action) {
                 })
             }
         case SET_BALANCE: // { id: 0, balanceCents: 0 }
-            const newState = { ...state, accounts: state.accounts.map((account) => account.id != payload.id ? account : { ...account, balanceCents: payload.balanceCents }) }
-            console.log({ id: payload.id, state, newState })
-            return newState
+            return { ...state, accounts: state.accounts.map((account) => account.id != payload.id ? account : { ...account, balanceCents: payload.balanceCents }) }
+        case SET_ALLOWANCE: // { allowanceCents: 0 }
+            return { ...state, allowanceCents: Math.max(payload.allowanceCents, 0) }
+        case DISPERSE_ALLOWANCE: // { pinCode: '1111', disperseCents: 0 }
+            if(state.pinCode != payload.pinCode) return state // dont do security logic in reducers lol
+            return {
+                ...state,
+                accounts: state.accounts.map((account) => {
+                    const newBalance = account.balanceCents + payload.disperseCents
+                    return { ...account, balanceCents: newBalance }
+                }),
+                allowanceLastDistributed: new Date()
+            }
     }
 
     return state;

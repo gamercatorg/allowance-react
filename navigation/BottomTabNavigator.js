@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import EditScreen from "../screens/EditScreen";
+import AdminScreen from "../screens/AdminScreen";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Home";
@@ -32,6 +33,16 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: "Edit",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="edit" />
+          )
+        }}
+      />
+      <BottomTab.Screen
+        name="Admin"
+        component={AdminScreen}
+        options={{
+          title: "Admin",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="insert-emoticon" />
           )
         }}
       />
