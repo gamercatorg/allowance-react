@@ -1,4 +1,5 @@
-import { ADJUST_BALANCE, SET_BALANCE, SET_ALLOWANCE, DISPERSE_ALLOWANCE } from '../constants'
+import { ADJUST_BALANCE, SET_BALANCE, SET_ALLOWANCE, DISPERSE_ALLOWANCE, AUTO_DISPERSE } from '../constants'
+import moment from 'moment'
 
 const initialState = {
     pinCode: '0000',
@@ -21,6 +22,7 @@ function rootReducer(state = initialState, action) {
                 ...state, accounts: state.accounts.map((account) => {
                     if (account.id != payload.id) return account
                     const newBalance = account.balanceCents + payload.adjustmentCents
+                    if(newBalance <= 0) return account
                     return { ...account, balanceCents: newBalance }
                 })
             }
@@ -28,12 +30,23 @@ function rootReducer(state = initialState, action) {
             return { ...state, accounts: state.accounts.map((account) => account.id != payload.id ? account : { ...account, balanceCents: payload.balanceCents }) }
         case SET_ALLOWANCE: // { allowanceCents: 0 }
             return { ...state, allowanceCents: Math.max(payload.allowanceCents, 0) }
-        case DISPERSE_ALLOWANCE: // { pinCode: '1111', disperseCents: 0 }
-            if(state.pinCode != payload.pinCode) return state // dont do security logic in reducers lol
+        case DISPERSE_ALLOWANCE: // { disperseCents: 0 }
             return {
                 ...state,
                 accounts: state.accounts.map((account) => {
                     const newBalance = account.balanceCents + payload.disperseCents
+                    return { ...account, balanceCents: newBalance }
+                }),
+                allowanceLastDistributed: new Date()
+            }
+        case AUTO_DISPERSE:
+            const weeksSinceLastDispersed = moment().diff(state.allowanceLastDistributed, 'weeks')
+            if(weeksSinceLastDispersed <= 0) return state
+            const disperseCents = Math.max(0, weeksSinceLastDispersed * state.allowanceCents)
+            return {
+                ...state,
+                accounts: state.accounts.map((account) => {
+                    const newBalance = account.balanceCents + disperseCents
                     return { ...account, balanceCents: newBalance }
                 }),
                 allowanceLastDistributed: new Date()

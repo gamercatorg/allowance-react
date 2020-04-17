@@ -6,13 +6,19 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
+import { autoDisperse } from '../actions'
 
 const centsToPrettyString = (cents) => (cents / parseFloat(100)).toLocaleString("en-US", {style:"currency", currency:"USD"})
 
 export default function HomeScreen() {
 
+  const dispatch = useDispatch()
   const accounts = useSelector(_ => _.accounts);
+
+  React.useEffect(() => {
+    dispatch(autoDisperse())
+  })
 
   return (
     <View style={styles.container}>

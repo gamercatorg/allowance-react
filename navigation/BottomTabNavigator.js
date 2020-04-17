@@ -2,7 +2,6 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
-import EditScreen from "../screens/EditScreen";
 import AdminScreen from "../screens/AdminScreen";
 
 const BottomTab = createBottomTabNavigator();
@@ -27,16 +26,6 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Edit"
-        component={EditScreen}
-        options={{
-          title: "Edit",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="edit" />
-          )
-        }}
-      />
-      <BottomTab.Screen
         name="Admin"
         component={AdminScreen}
         options={{
@@ -57,7 +46,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case "Home":
       return "Gamercat Allowance App";
-    case "Edit":
-      return "Withdraw Money";
+    case "Admin":
+      return "Administration";
   }
 }
