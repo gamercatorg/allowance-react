@@ -112,23 +112,6 @@ export default function AdminScreen() {
               }}
             />
           </View>
-          <View>
-            <Text style={{ marginBottom: "20px" }}>
-              Allowance was last distributed{" "}
-              {dateToPrettyString(allowanceLastDistributed)}
-            </Text>
-            <Button
-              title={`Disperse ${centsToPrettyString(amountToDisperse)}`}
-              onPress={() => {
-                dispatch(
-                  disperseAllowance({
-                    pinCode,
-                    disperseCents: amountToDisperse
-                  })
-                );
-              }}
-            />
-          </View>
           <View style={{marginTop: '20px'}}>
               <View><Text style={{textAlign: 'center'}}>Edit amount of money</Text></View>
 
