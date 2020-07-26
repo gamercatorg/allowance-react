@@ -5485,6 +5485,11 @@ react-native-screens@2.0.0-alpha.12:
   dependencies:
     debounce "^1.2.0"
 
+react-native-testfairy@^2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/react-native-testfairy/-/react-native-testfairy-2.29.0.tgz#1b8c0cffe00240364bcad5669b9ecc72e8fb42e1"
+  integrity sha512-etL/SyorVdLo3eVLTHZm5Q9AwtnDRZzBMLGVxvoEILRp1knjG/lkwF/R8eSDZrOL1H6CYU5ZM4DLZL7+A8VPQA==
+
 react-native-view-shot@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.0.2.tgz#daccaec5b8038a680b17533ff7e72876e68c7d0d"

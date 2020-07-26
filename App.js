@@ -14,6 +14,17 @@ import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
 
+const TestFairy = require('react-native-testfairy');
+function componentWillMount() {
+   TestFairy.begin("SDK-0gqjTnaH");
+}
+
+var _testfairyConsoleLog = console.log;
+console.log = function(message) {
+   _testfairyConsoleLog(message);
+   TestFairy.log(message);
+}
+
 // import * as Sentry from 'sentry-expo';
 
 // Sentry.init({

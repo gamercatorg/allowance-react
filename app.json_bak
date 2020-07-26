@@ -4,11 +4,7 @@
     "slug": "allowance-react",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -21,15 +17,24 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "dev.craftcat.allowanceapp",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
-    "description": "",
-    "githubUrl": "https://github.com/gamercatorg/allowance-react"
+
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "meow-cat",
+            "project": "allowance-react",
+            "authToken": "15c38a8bdde0423a97fce4c58fb9f14cb699d52c177f45b8853c38766412e276",
+          }
+        }
+      ]
+    }
   }
 }
