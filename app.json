@@ -30,6 +30,9 @@
       "supportsTablet": true
     },
     "description": "",
-    "githubUrl": "https://github.com/gamercatorg/allowance-react"
-  }
+    "githubUrl": "https://github.com/gamercatorg/allowance-react",
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "Allowance App",
+  "name": "Allowance"
 }

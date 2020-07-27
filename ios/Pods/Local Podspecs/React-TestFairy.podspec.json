@@ -1,0 +1,41 @@
+{
+  "name": "React-TestFairy",
+  "version": "2.29.0",
+  "summary": "TestFairy app monitoring and crash handling framework",
+  "homepage": "https://www.testfairy.com",
+  "license": {
+    "type": "Commercial",
+    "text": ""
+  },
+  "authors": {
+    "TestFairy": "support@testfairy.com"
+  },
+  "platforms": {
+    "ios": "6.0"
+  },
+  "source": {
+    "git": "https://github.com/testfairy/react-native-testfairy/react-native-testfairy.git",
+    "tag": "2.29.0"
+  },
+  "source_files": "ios/*.{h,m,a}",
+  "libraries": "TestFairy",
+  "requires_arc": true,
+  "frameworks": [
+    "UIKit",
+    "CoreMedia",
+    "CoreMotion",
+    "AVFoundation",
+    "AVFoundation",
+    "OpenGLES",
+    "SystemConfiguration"
+  ],
+  "dependencies": {
+    "React": [
+
+    ]
+  },
+  "xcconfig": {
+    "LIBRARY_SEARCH_PATHS": "${PODS_ROOT}/../../node_modules/react-native-testfairy/ios/",
+    "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym"
+  }
+}
