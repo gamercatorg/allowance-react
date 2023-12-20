@@ -21,7 +21,7 @@
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "@react-navigation/web": "~1.0.0-alpha.9",
-    "expo": "~36.0.0",
+    "expo": "~43.0.0",
     "expo-asset": "~8.0.0",
     "expo-constants": "~8.0.0",
     "expo-font": "~8.0.0",
@@ -30,16 +30,16 @@
     "react": "~16.9.0",
     "react-code-input": "^3.9.0",
     "react-dom": "~16.9.0",
-    "react-native": "0.62.0",
+    "react-native": "0.71.0",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-testfairy": "^2.29.0",
-    "react-native-web": "~0.11.7",
+    "react-native-web": "~0.16.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "snyk": "^1.316.1"
+    "snyk": "^1.996.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
